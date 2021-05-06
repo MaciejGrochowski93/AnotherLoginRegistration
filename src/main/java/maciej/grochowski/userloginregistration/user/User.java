@@ -28,24 +28,22 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "student_sequence")
     private Integer id;
 
-    private String name;
-    private String username;
+    private String firstName;
+    private String lastName;
     private String password;
     private String email;
 
     @Enumerated(EnumType.STRING)
     private UserRole userRoles;
-    private Boolean locked;
-    private Boolean enabled;
+    private Boolean locked = false;
+    private Boolean enabled = false;
 
-    public User(String name, String username, String password, String email, UserRole userRoles, Boolean locked, Boolean enabled) {
-        this.name = name;
-        this.username = username;
+    public User(String firstName, String lastName, String password, String email, UserRole userRoles) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.password = password;
         this.email = email;
         this.userRoles = userRoles;
-        this.locked = locked;
-        this.enabled = enabled;
     }
 
     @Override
@@ -54,14 +52,22 @@ public class User implements UserDetails {
         return Collections.singletonList(authority);
     }
 
-    @Override
-    public String getPassword() {
-        return password;
+    public String getFirstName(){
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
     }
 
     @Override

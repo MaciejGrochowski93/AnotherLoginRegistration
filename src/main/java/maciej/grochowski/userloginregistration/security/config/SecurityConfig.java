@@ -1,9 +1,7 @@
 package maciej.grochowski.userloginregistration.security.config;
 
 import lombok.AllArgsConstructor;
-import maciej.grochowski.userloginregistration.security.PasswordEncoder;
-import maciej.grochowski.userloginregistration.user.MyUserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import maciej.grochowski.userloginregistration.user.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -36,14 +34,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin();
     }
 
-    private final MyUserService myUserService;
+    private final UserService userService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider(){
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setPasswordEncoder(bCryptPasswordEncoder);
-        provider.setUserDetailsService(myUserService);
+        provider.setUserDetailsService(userService);
         return provider;
     }
 }
