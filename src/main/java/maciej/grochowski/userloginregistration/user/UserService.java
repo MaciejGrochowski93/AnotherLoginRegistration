@@ -1,11 +1,16 @@
 package maciej.grochowski.userloginregistration.user;
 
 import lombok.AllArgsConstructor;
+import maciej.grochowski.userloginregistration.registration.token.ConfToken;
+import maciej.grochowski.userloginregistration.registration.token.ConfTokenService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -14,6 +19,7 @@ public class UserService implements UserDetailsService {
     private static final String USER_NOT_FOUND_MSG = "User with email %s was not found.";
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final ConfTokenService confTokenService;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -31,6 +37,19 @@ public class UserService implements UserDetailsService {
         user.setPassword(encodedPass);
         userRepository.save(user);
 
-        return "User successfully registered!";
+
+        String token = UUID.randomUUID().toString();
+        ConfToken confToken = new ConfToken(
+                token,
+                LocalDateTime.now(),
+                LocalDateTime.now().plusMinutes(15),
+                user
+        );
+
+        // TODO: send email
+
+        confTokenService.saveConfToken(confToken);
+
+        return token;
     }
 }

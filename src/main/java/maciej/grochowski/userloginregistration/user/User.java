@@ -20,10 +20,7 @@ import java.util.Collections;
 public class User implements UserDetails {
 
     @Id
-    @SequenceGenerator(
-            name = "student_sequence",
-            sequenceName = "student_sequence",
-            allocationSize = 1
+    @SequenceGenerator(name = "student_sequence", sequenceName = "student_sequence", allocationSize = 1
     )
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "student_sequence")
     private Integer id;
