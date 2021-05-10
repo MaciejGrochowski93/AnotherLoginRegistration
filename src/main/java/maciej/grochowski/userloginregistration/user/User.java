@@ -33,7 +33,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserRole userRoles;
     private Boolean locked = false;
-    private Boolean enabled = false;
+    private Boolean enabled;
 
     public User(String firstName, String lastName, String password, String email, UserRole userRoles) {
         this.firstName = firstName;
@@ -49,7 +49,7 @@ public class User implements UserDetails {
         return Collections.singletonList(authority);
     }
 
-    public String getFirstName(){
+    public String getFirstName() {
         return firstName;
     }
 

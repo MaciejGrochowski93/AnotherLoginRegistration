@@ -37,7 +37,6 @@ public class UserService implements UserDetailsService {
         user.setPassword(encodedPass);
         userRepository.save(user);
 
-
         String token = UUID.randomUUID().toString();
         ConfToken confToken = new ConfToken(
                 token,
@@ -56,5 +55,4 @@ public class UserService implements UserDetailsService {
     public int enableUser(String email){
         return userRepository.enableUser(email);
     }
-
 }

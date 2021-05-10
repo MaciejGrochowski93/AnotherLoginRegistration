@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Repository
+@Transactional(readOnly = true)
 public interface ConfTokenRepository extends JpaRepository<ConfToken, Integer> {
     Optional<ConfToken> findByToken(String token);
 
